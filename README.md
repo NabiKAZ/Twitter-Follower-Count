@@ -11,7 +11,7 @@ This is an userscript for `Tampermonkey`.
 
 First install [Tampermonkey](https://tampermonkey.net/) for `Chrome`, `Microsoft Edge`, `Safari`, `Firefox`, `Opera`, `Dolphin` or `UC Browser` from here: [https://tampermonkey.net/](https://tampermonkey.net/)
 
-And then you can install [`Twitter_Follower_Count.user.js`](https://twitter.com/NabiKAZ/Twitter-Follower-Count/raw/main/Twitter_Follower_Count.user.js) file with drag and drop file on your browser, or add the script by dashboard of Tampermonkey.
+And then you can install [`Twitter_Follower_Count.user.js`](https://github.com/NabiKAZ/Twitter-Follower-Count/raw/main/Twitter_Follower_Count.user.js) file with drag and drop file on your browser, or add the script by dashboard of Tampermonkey.
 
 ## Screenshot
 ![Twitter Follower Count Screenshot](https://github.com/NabiKAZ/Twitter-Follower-Count/assets/246721/e1ba50c2-f4df-4326-9656-7a5c50edabe6)
