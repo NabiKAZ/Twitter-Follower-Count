@@ -68,6 +68,16 @@
         return result;
     }
 
+    function formatNumber(number){
+        if (number >= 1000000) {
+            return (number / 1000000).toFixed(1) + 'M';
+        } else if (number >= 1000) {
+            return (number / 1000).toFixed(1) + 'K';
+        } else {
+            return number.toString();
+        }
+    }
+
     // Main function to update follower count on Twitter profiles
     function main() {
         allUsers.forEach(function(user) {
@@ -101,9 +111,9 @@
                 // Create and append the count element
                 var newSpanElement = document.createElement('span');
                 newSpanElement.className = 'count-follower';
-                newSpanElement.innerText = user.followers_count.toLocaleString('en-US');
+                newSpanElement.innerText = formatNumber(user.followers_count).toLocaleString('en-US');
                 newSpanElement.style.position = 'absolute';
-                newSpanElement.style.top = '-9px';
+                newSpanElement.style.bottom = '-11px';
                 newSpanElement.style.left = '50%';
                 newSpanElement.style.transform = 'translate(-50%)';
                 newSpanElement.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
