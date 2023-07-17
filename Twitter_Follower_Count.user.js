@@ -141,6 +141,6 @@
     // Call the main function on page load
     window.addEventListener('load', () => {
         main();
-    }, false);
+    });
 
 })();
