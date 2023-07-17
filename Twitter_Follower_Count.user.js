@@ -113,7 +113,7 @@
                 newSpanElement.className = 'count-follower';
                 newSpanElement.innerText = formatNumber(user.followers_count).toLocaleString('en-US');
                 newSpanElement.style.position = 'absolute';
-                newSpanElement.style.bottom = '-11px';
+                newSpanElement.style.bottom = '-2px';
                 newSpanElement.style.left = '50%';
                 newSpanElement.style.transform = 'translate(-50%)';
                 newSpanElement.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
