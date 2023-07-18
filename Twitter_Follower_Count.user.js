@@ -25,7 +25,11 @@
         // Add an event listener to the load event
         xhr.addEventListener('load', function() {
             // Parse the response text as JSON
-            var responseJSON = JSON.parse(xhr.responseText);
+            try {
+                var responseJSON = JSON.parse(xhr.responseText);
+            } catch (error) {
+                return;
+            }
 
             // Extract user data from the response
             var users = getNames(responseJSON, 'screen_name');
