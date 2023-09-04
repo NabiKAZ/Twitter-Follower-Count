@@ -25,11 +25,7 @@
         // Add an event listener to the load event
         xhr.addEventListener('load', function() {
             // Parse the response text as JSON
-            try {
-                var responseJSON = JSON.parse(xhr.responseText);
-            } catch (error) {
-                return;
-            }
+            var responseJSON = JSON.parse(xhr.responseText);
 
             // Extract user data from the response
             var users = getNames(responseJSON, 'screen_name');
@@ -47,6 +43,7 @@
                         'name': user.name,
                         'screen_name': user.screen_name,
                         'followers_count': user.followers_count,
+                        'formated_followers_count': formatNumber(user.followers_count).toLocaleString('en-US'),
                         'friends_count': user.friends_count,
                     });
                 }
@@ -70,6 +67,16 @@
             }
         }
         return result;
+    }
+
+    function formatNumber(number){
+        if (number >= 1000000) {
+            return (number / 1000000).toFixed(1) + 'M';
+        } else if (number >= 1000) {
+            return (number / 1000).toFixed(1) + 'K';
+        } else {
+            return number.toString();
+        }
     }
 
     // Main function to update follower count on Twitter profiles
@@ -105,18 +112,18 @@
                 // Create and append the count element
                 var newSpanElement = document.createElement('span');
                 newSpanElement.className = 'count-follower';
-                newSpanElement.innerText = user.followers_count.toLocaleString('en-US');
+                newSpanElement.innerText = user.formated_followers_count;
                 newSpanElement.style.position = 'absolute';
-                newSpanElement.style.top = '-9px';
+                newSpanElement.style.bottom = '-2px';
                 newSpanElement.style.left = '50%';
                 newSpanElement.style.transform = 'translate(-50%)';
-                newSpanElement.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-                newSpanElement.style.fontSize = '9px';
-                newSpanElement.style.fontWeight = '400';
+                newSpanElement.style.fontFamily = '"TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+                newSpanElement.style.fontSize = '8px';
+                newSpanElement.style.fontWeight = '1000';
                 newSpanElement.style.whiteSpace = 'nowrap';
-                newSpanElement.style.color = 'white';
-                newSpanElement.style.backgroundColor = '#1d9bf0';
-                newSpanElement.style.border = '1px solid white';
+                newSpanElement.style.color = 'rgb(113, 118, 123)';
+                newSpanElement.style.backgroundColor = '#16181C';
+                newSpanElement.style.border = '1px solid #16181C';
                 newSpanElement.style.borderRadius = '9999px';
                 newSpanElement.style.padding = '0px 4px 1px';
 
