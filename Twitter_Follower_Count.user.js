@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Twitter Follower Count
-// @namespace    https://github.com/NabiKAZ/Twitter-Follower-Count
+// @namespace    https://github.com/mehdipayervand/Twitter-Follower-Count
 // @version      0.1.0
 // @description  Display the number of followers of Twitter users
 // @author       Nabi K.A.Z. <nabikaz@gmail.com> | www.nabi.ir | @NabiKAZ
@@ -121,9 +121,9 @@
                 newSpanElement.style.fontSize = '8px';
                 newSpanElement.style.fontWeight = '1000';
                 newSpanElement.style.whiteSpace = 'nowrap';
-                newSpanElement.style.color = 'rgb(113, 118, 123)';
-                newSpanElement.style.backgroundColor = '#16181C';
-                newSpanElement.style.border = '1px solid #16181C';
+                newSpanElement.style.color = '#ffffff';
+                newSpanElement.style.backgroundColor = 'rgb(29, 155, 240)';
+                newSpanElement.style.border = '1px solid #0867d2';
                 newSpanElement.style.borderRadius = '9999px';
                 newSpanElement.style.padding = '0px 4px 1px';
 
