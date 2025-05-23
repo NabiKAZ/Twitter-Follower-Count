@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name         Twitter Follower Count
 // @namespace    https://github.com/NabiKAZ/Twitter-Follower-Count
-// @version      0.1.0
+// @version      0.2.0
 // @description  Display the number of followers of Twitter users
 // @author       Nabi K.A.Z. <nabikaz@gmail.com> | www.nabi.ir | @NabiKAZ
 // @match        https://twitter.com/*
+// @match        https://x.com/*
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     // Array to store all users
@@ -18,12 +19,12 @@
     var originalSend = XMLHttpRequest.prototype.send;
 
     // Override the send method
-    XMLHttpRequest.prototype.send = function() {
+    XMLHttpRequest.prototype.send = function () {
         // Save a reference to the current instance
         var xhr = this;
 
         // Add an event listener to the load event
-        xhr.addEventListener('load', function() {
+        xhr.addEventListener('load', function () {
             // Parse the response text as JSON
             try {
                 var responseJSON = JSON.parse(xhr.responseText);
@@ -32,10 +33,10 @@
             }
 
             // Extract user data from the response
-            var users = getNames(responseJSON, 'screen_name');
+            var users = extractUsers(responseJSON);
 
             // Iterate over the users
-            users.forEach(function(user) {
+            users.forEach(function (user) {
                 // Check if the user object contains the required properties
                 if (!user.hasOwnProperty('name') || !user.hasOwnProperty('screen_name') || !user.hasOwnProperty('followers_count') || !user.hasOwnProperty('friends_count')) return;
 
@@ -59,27 +60,36 @@
     };
 
     // Recursive function to extract names from an object
-    function getNames(obj, name, result = []) {
-        for (var key in obj) {
+    function extractUsers(obj, result = []) {
+        if (typeof obj !== 'object' || obj === null) return result;
+
+        if ('core' in obj && 'legacy' in obj && obj.core && obj.legacy) {
+            const user = {
+                name: obj.core.name,
+                screen_name: obj.core.screen_name,
+                followers_count: obj.legacy.followers_count,
+                friends_count: obj.legacy.friends_count
+            };
+            result.push(user);
+        }
+
+        for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
-                if ("object" == typeof(obj[key])) {
-                    getNames(obj[key], name, result);
-                } else if (key == name) {
-                    result.push(obj);
-                }
+                extractUsers(obj[key], result);
             }
         }
+
         return result;
     }
 
     // Main function to update follower count on Twitter profiles
     function main() {
-        allUsers.forEach(function(user) {
+        allUsers.forEach(function (user) {
             // Find the profile links of the user
             var linkElements = document.querySelectorAll('a[href="/' + user.screen_name + '"]');
 
             // Iterate over the profile links
-            linkElements.forEach(function(linkElement) {
+            linkElements.forEach(function (linkElement) {
                 // Check if the count element already exists
                 var countElement = linkElement.querySelector('span.count-follower');
                 if (countElement) return;
