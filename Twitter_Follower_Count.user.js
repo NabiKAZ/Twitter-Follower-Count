@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitter Follower Count
 // @namespace    https://github.com/NabiKAZ/Twitter-Follower-Count
-// @version      0.2.0
+// @version      0.2.1
 // @description  Display the number of followers of Twitter users
 // @author       Nabi K.A.Z. <nabikaz@gmail.com> | www.nabi.ir | @NabiKAZ
 // @match        https://twitter.com/*
@@ -85,6 +85,9 @@
     // Main function to update follower count on Twitter profiles
     function main() {
         allUsers.forEach(function (user) {
+            // Skip users without screen_name or followers_count
+            if (!user.screen_name || !user.followers_count) return;
+
             // Find the profile links of the user
             var linkElements = document.querySelectorAll('a[href="/' + user.screen_name + '"]');
 
