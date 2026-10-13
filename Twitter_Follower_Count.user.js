@@ -3,7 +3,7 @@
 // @namespace    https://github.com/NabiKAZ/Twitter-Follower-Count
 // @version      0.2.1
 // @description  Display the number of followers of Twitter users
-// @author       Nabi K.A.Z. <nabikaz@gmail.com> | www.nabi.ir | @NabiKAZ
+// @author       Nabi K.A.Z. <nabikaz60@gmail.com> | www.nabi.ir | @NabiKAZ
 // @match        https://twitter.com/*
 // @match        https://x.com/*
 // @grant        none
@@ -63,14 +63,34 @@
     function extractUsers(obj, result = []) {
         if (typeof obj !== 'object' || obj === null) return result;
 
-        if ('core' in obj && 'legacy' in obj && obj.core && obj.legacy) {
-            const user = {
+        // New GraphQL shape (current X API): core + relationship_counts, no legacy
+        if (obj.core && obj.core.screen_name && obj.relationship_counts && obj.relationship_counts.followers !== undefined) {
+            result.push({
+                name: obj.core.name,
+                screen_name: obj.core.screen_name,
+                followers_count: obj.relationship_counts.followers,
+                friends_count: obj.relationship_counts.following
+            });
+        }
+
+        // Old GraphQL shape: core + legacy
+        else if (obj.core && obj.core.screen_name && obj.legacy) {
+            result.push({
                 name: obj.core.name,
                 screen_name: obj.core.screen_name,
                 followers_count: obj.legacy.followers_count,
                 friends_count: obj.legacy.friends_count
-            };
-            result.push(user);
+            });
+        }
+
+        // REST 1.1 shape: flat user object (e.g. friends/following/list.json, notifications)
+        else if (obj.screen_name && typeof obj.followers_count === 'number' && typeof obj.friends_count === 'number') {
+            result.push({
+                name: obj.name,
+                screen_name: obj.screen_name,
+                followers_count: obj.followers_count,
+                friends_count: obj.friends_count
+            });
         }
 
         for (const key in obj) {
